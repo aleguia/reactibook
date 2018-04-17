@@ -27,7 +27,7 @@ const INITIAL_STATE = {
 class SignInForm extends Component {
     constructor(props) {
         super(props);
-
+        console.log(props.history);
         this.state = { ...INITIAL_STATE };
     }
 
@@ -44,7 +44,8 @@ class SignInForm extends Component {
         auth.doSignInWithEmailAndPassword(email, password)
             .then(() => {
                 this.setState(() => ({ ...INITIAL_STATE }));
-                history.push(routes.LANDING);
+                history.push(routes.POSTS);
+                console.log(history);
             })
             .catch(error => {
                 this.setState(byPropKey('error', error));
