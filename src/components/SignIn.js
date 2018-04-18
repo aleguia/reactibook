@@ -5,10 +5,11 @@ import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
+import './SignIn.css';
 
 const SignInPage = ({ history }) =>
-    <div>
-        <h1>SignIn</h1>
+    <div className="SignInForm">
+        <h1>ReactiBook</h1>
         <SignInForm history={history} />
         <PasswordForgetLink />
         <SignUpLink />
@@ -27,7 +28,7 @@ const INITIAL_STATE = {
 class SignInForm extends Component {
     constructor(props) {
         super(props);
-        console.log(props.history);
+        // console.log(props.history);
         this.state = { ...INITIAL_STATE };
     }
 
@@ -66,7 +67,7 @@ class SignInForm extends Component {
             email === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
+            <form  onSubmit={this.onSubmit}>
                 <input
                     value={email}
                     onChange={event => this.setState(byPropKey('email', event.target.value))}

@@ -1,0 +1,30 @@
+.App{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SignInForm{
+
+    border:1px solid black;
+    width:33%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.SignInForm form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.SignInForm form input,
+.SignInForm form button{
+    margin: 10px 0;
+}

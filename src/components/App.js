@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  Redirect
 } from 'react-router-dom';
 
 import Posts from './Posts';
@@ -9,42 +10,61 @@ import Posts from './Posts';
 import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
 import PasswordForgetPage from './PasswordForget';
-
+import { auth } from '../firebase/firebase';
 
 import * as routes from '../constants/routes';
 import { firebase } from '../firebase';
+import './App.css';
 
-// const App = () =>
-//   <Router>
-//     <div>
-//       <Navigation />
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-//       <hr />
+    this.state = {
+      authUser: null,
+      uid:null,
+     
+    };
 
+    
+  }
+
+  componentDidMount() {
+    
+    firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? (
+          this.setState(() => ({ authUser })
+        
+        
+        ))
+        : this.setState(() => ({ authUser: null }));
+    });
+
+    
+    
+  }
+
+  
+  
+
+  render(){    
+    
+    return(
       
-//     </div>
-//   </Router>
-
-const App = () =>
-      <Router>
+      
+      <Router>         
         <div>
-          {/* <Posts authUser={this.state.authUser} />
-
-          <hr /> */}
-          
-      
-      
-      
           <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />}  />
           <Route exact path={routes.SIGN_IN} component={() => <SignInPage />}  />
-          <Route exact path={routes.HOME} component={() => <SignInPage />}  />
-          <Route exact path={routes.POSTS} component={() => <Posts />} />
+          <Route exact path={routes.HOME} component={() => <SignInPage /> }  /> 
+          <Route exact path={routes.POSTS} component={() => <Posts authUser={this.state.authUser}/>} />
           <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
-          
-        </div>
+        </div>       
       </Router>
- 
- 
+    )
+  }
+}
 
 
 export default App;

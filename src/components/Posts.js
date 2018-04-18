@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import { Link, Redirect } from 'react-router-dom';
 
 import SignInPage from './SignIn';
 import SignOutButton from './SignOut';
-import * as routes from '../constants/routes';
-import { firebase } from '../firebase';
-import SignIn from './SignIn';
-import { db } from '../firebase/firebase';
+import { db, auth } from '../firebase/firebase';
 import EditButton from './EditButton';
+import AddPost from './AddPost';
+import {Redirect} from 'react-router-dom';
 
 
 
@@ -16,122 +14,129 @@ class Posts extends Component{
     constructor(props) {
         super(props);
 
-        console.log(props + " contenido de props")
-        this.state = {
-            authUser: 'toBe',
-            posts:0
-        };
+        // console.log(Object.keys(this.props.authUser) + " contenido de props")
+        
+    }
+   
+    state = {
+        
+        posts: 0,
+        loading: false
     }
 
-     componentDidMount() {
-        firebase.auth.onAuthStateChanged(authUser => {
-            authUser
-                ? this.setState(() => ({ authUser }))
-                : this.setState(() => (
-                    { authUser: null }               
-                   
-                
-                ));
-        });
-     }
-
+    
      
 
-    componentWillMount() {
-        let postsRef = db.ref('posts');
+    componentWillMount() { 
+        let _this = this;     
+        
+        if(!this.props.authUser ){
+                console.log("se esta ejecutando if");
+                _this.setState({
+                   id:null, 
+                    
+                })
+        } else {          
 
-        let _this = this;
+            console.log("se esta ejecutando else");
+            let userId = this.props.authUser.uid;      
+            let postsRef = db.ref('/users/'+ userId + '/posts');        
 
-        postsRef.on('value', function (snapshot) {
-            console.log(snapshot.val());
+            postsRef.on('value', function (snapshot) {
+                console.log(snapshot.val()+"the snapshot");
 
-            _this.setState({
-                posts: snapshot.val(),
-                loading: false
+                _this.setState({
+                    id:userId,
+                    posts: snapshot.val() ,
+                    loading: false
+                });
             });
-        });
+            } 
     }
-
-
-
-    // handleEdit = (post, key) => {
-    //    innerHTML = "guardar";
-        
-    //     console.log("handleEdit pressed");
-        
-        
-    // }
 
     submitEdit = (post, key) => {
 
         db.ref('posts/' + key).set({
-            title: post.title,
+            post: post.post,
             upvote: post.upvote + 1,
             downvote: post.downvote
         });
     }
 
-    handleDelete = (post, key) => {
-        db.ref('posts/' + key).remove();
+    handleDelete = (post, key, id) => {
+        db.ref('/users/' + id + '/posts/' + key).remove();
     }
 
     render() {
-        let posts = this.state.posts;
-        console.log(posts + "esteeeee");
-        console.log(this.state.authUser + " Cuando autoriza");
+        let posts = this.state.posts;        
         let _this = this;
+        let id = this.state.id;
 
-        if (!posts) {
-            return false;
-        }
+        // if (!posts) {
+        //     return false;
+        // }
 
-        if (this.props.loading) {
+        if (!id && this.state.loading) {
             return (
-                <div>
+                <h1>
                     Loading…
-                </div>
+                </h1>
             );
         }
 
-        if(this.state.authUser)  {return (
-            <div className="Posts">
-                {Object.keys(posts).map(function (key) {
-                    return (
-                        <div key={key}>
-                            <div style={{display: 'none'}}>Title: {posts[key].title}</div>
-                            {/* <div>Upvotes: {posts[key].upvote}</div>
-                            <div>Downvotes: {posts[key].downvote}</div> */}
-                            <div>
-                                {/* <button
-                                    onClick={_this.handleEdit.bind(this,
-                                        posts[key], key)}
-                                    type="button"
-                                >
-                                    Editar
-                                </button> */}
-                                <EditButton />
-                                <button
-                                    onClick={_this.handleDelete.bind(this,
-                                        posts[key], key)}
-                                    type="button"
-                                >
-                                   Eliminar
-                                </button>
-                            </div>
-                           
-                        </div>
-                    );
-                })
+        if (!id )  {
+            
+            return (                
+                <div>
+                    <h1>Primero debes loguearte</h1>
+                    <SignInPage/>
+                </div>                 
+            );
+        }
+            
+            
+        
+            return (
+                <div className="Posts">
+                    <AddPost uid={id}/>                  
+                    
+                    {Object.keys(posts).map(function (key) {
+                            
+                            return (
+                                <div key={key}>
 
-                }
-                <SignOutButton />  
-            </div >
-        );}
-
-        return(
-            <Redirect to="/"  />
-        );
-    }
+                                    <div > {posts[key].post}</div>
+                                    {/* <div>Upvotes: {posts[key].upvote}</div>
+                                    <div>Downvotes: {posts[key].downvote}</div> */}
+                                    <div>
+                                        {/* <button
+                                            onClick={_this.handleEdit.bind(this,
+                                                posts[key], key)}
+                                            type="button"
+                                        >
+                                            Editar
+                                        </button> */}
+                                        <EditButton />
+                                        <button
+                                            onClick={_this.handleDelete.bind(this,
+                                                posts[key], key,id)}
+                                            type="button"
+                                        >
+                                        Eliminar
+                                        </button>
+                                    </div>
+                                
+                                </div>
+                            );
+                        })
+                    
+                    }
+                    
+                    <SignOutButton />  
+                </div >
+            );
+        
+    }   
 }  
 
 export default Posts;

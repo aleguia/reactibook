@@ -5,7 +5,7 @@ import { auth } from '../firebase';
 
 const PasswordForgetPage = () =>
     <div>
-        <h1>PasswordForget</h1>
+        <h1>Olvide Contraseña</h1>
         <PasswordForgetForm />
     </div>
 
@@ -56,7 +56,7 @@ class PasswordForgetForm extends Component {
                     placeholder="Email Address"
                 />
                 <button disabled={isInvalid} type="submit">
-                    Reset My Password
+                    Resetear mi contraseña
         </button>
 
                 {error && <p>{error.message}</p>}
@@ -67,7 +67,7 @@ class PasswordForgetForm extends Component {
 
 const PasswordForgetLink = () =>
     <p>
-        <Link to="/pw-forget">Forgot Password?</Link>
+        <Link to="/pw-forget">¿Olvidaste tu contraseña?</Link>
     </p>
 
 export default PasswordForgetPage;

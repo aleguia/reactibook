@@ -34,7 +34,7 @@ class SignUpForm extends Component {
     onSubmit = (event) => {
 
         const {
-            username,
+            
             email,
             passwordOne,
         } = this.state;
@@ -48,7 +48,7 @@ class SignUpForm extends Component {
                 this.setState(() => ({ ...INITIAL_STATE }));
                 history.push(routes.POSTS);
             })
-            .catch(error => {0
+            .catch(error => {
                 this.setState(byPropKey('error', error));
             });
 
@@ -99,7 +99,7 @@ class SignUpForm extends Component {
                     placeholder="Confirm Password"
                 />
                 <button disabled={isInvalid} type="submit">
-                    Sign Up
+                    Registrate
                 </button>
 
                 {error && <p>{error.message}</p>}
@@ -111,9 +111,9 @@ class SignUpForm extends Component {
 
 const SignUpLink = () =>
     <p>
-        Don't have an account?
+        ¿No tienes cuenta?
     {' '}
-        <Link to={routes.SIGN_UP}>Sign Up</Link>
+        <Link to={routes.SIGN_UP}>Registrate</Link>
     </p>
 
 export default withRouter(SignUpPage);
