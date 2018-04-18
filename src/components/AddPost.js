@@ -7,11 +7,12 @@ class AddPost extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     state = {
-        uid: '',
-        compartidoCon:'',
+        uid: this.props.id,
+        compartidoCon:'publico',
         post: ''
     };
 
@@ -19,7 +20,15 @@ class AddPost extends Component {
         this.setState({
             post: e.target.value
         });
+        
     }
+
+    handleSelect = (e) => {
+        this.setState({
+            compartidoCon: e.target.value
+        });
+    }
+
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -31,7 +40,7 @@ class AddPost extends Component {
         });
 
         this.setState({
-            compartidoCon: '',
+            
             post: ''
         });
     }
@@ -41,19 +50,18 @@ class AddPost extends Component {
             <div className="AddPost">
                 <input
                     type="text"
-                    placeholder="Write the post of your post"
+                    placeholder="¿Qué está pasando?"
                     onChange={this.handleChange}
                     value={this.state.post}
                 />
-                <select>
-                <option value="amigos" >Amigos</option>
-                <option value="publico" selected>Publico</option>
-                
+                <select onChange={this.handleSelect}>
+                    <option value="publico" >Publico</option>                
+                    <option value="amigos" >Amigos</option>
                 </select>
                 <button
                     type="submit"
                     onClick={this.handleSubmit}                >
-                    Submit
+                    Publicar
                 </button>
             </div>
         );

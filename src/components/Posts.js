@@ -13,19 +13,14 @@ import {Redirect} from 'react-router-dom';
 class Posts extends Component{
     constructor(props) {
         super(props);
-
-        // console.log(Object.keys(this.props.authUser) + " contenido de props")
         
-    }
-   
-    state = {
-        
-        posts: 0,
-        loading: false
-    }
-
-    
-     
+        this.state = {            
+            posts: 0,
+            loading: false,
+            editable:false
+        }
+         this.editPost = this.editPost.bind(this);
+    }  
 
     componentWillMount() { 
         let _this = this;     
@@ -67,6 +62,19 @@ class Posts extends Component{
         db.ref('/users/' + id + '/posts/' + key).remove();
     }
 
+    editPost = () => {
+
+        console.log("por fin!!!!")
+
+
+    }
+
+    editPost() 
+    
+    {}
+
+    
+
     render() {
         let posts = this.state.posts;        
         let _this = this;
@@ -76,7 +84,7 @@ class Posts extends Component{
         //     return false;
         // }
 
-        if (!id && this.state.loading) {
+        if (this.state.loading) {
             return (
                 <h1>
                     Loading…
@@ -104,46 +112,44 @@ class Posts extends Component{
                 </div >
             )
         }
-            return (
-                <div className="Posts">
-                    <AddPost uid={id}/>                  
-                    
-                    {Object.keys(posts).map(function (key) {
-                            
-                            return (
-                                <div key={key}>
 
-                                    <div > {posts[key].post}</div>
-                                    {/* <div>Upvotes: {posts[key].upvote}</div>
-                                    <div>Downvotes: {posts[key].downvote}</div> */}
-                                    <div>
-                                        {/* <button
-                                            onClick={_this.handleEdit.bind(this,
-                                                posts[key], key)}
-                                            type="button"
-                                        >
-                                            Editar
-                                        </button> */}
-                                        <EditButton />
-                                        <button
-                                            onClick={_this.handleDelete.bind(this,
-                                                posts[key], key,id)}
-                                            type="button"
-                                        >
-                                        Eliminar
-                                        </button>
-                                    </div>
+        return (
+            <div className="Posts">
+                <AddPost uid={id}/>                  
+                
+                {Object.keys(posts).map(function (key) { 
+
+                        return (
+                            <div key={key}>
                                 
-                                </div>
-                            );
-                        })
-                    
-                    }
-                    
-                    <SignOutButton />  
-                </div >
-            );
-        
+                                    {/* {posts[key].post} */}
+                                    <EditButton 
+                                         
+                                        postText={posts[key].post}
+                                        editable={_this.state.editable}
+                                        uid={id}
+                                        dni={key}
+                                        compartidoCon={posts[key].compartidoCon}
+                                    />
+                                    
+                                    <button
+                                        onClick={_this.handleDelete.bind(this,
+                                            posts[key], key,id)}
+                                        type="button"
+                                    >
+                                    Eliminar
+                                    </button>                                       
+                                   
+                                                                    
+                                {/* <div>                                        
+                                </div>                                 */}
+                            </div>
+                        );
+                    })                    
+                }                    
+                <SignOutButton />  
+            </div >
+        );        
     }   
 }  
 
