@@ -84,7 +84,7 @@ class Posts extends Component{
             );
         }
 
-        if (!id )  {
+        if (!id)  {
             
             return (                
                 <div>
@@ -95,7 +95,15 @@ class Posts extends Component{
         }
             
             
-        
+        if(!posts){
+            return (
+                <div className="Posts">
+                    <AddPost uid={id} />                  
+
+                    <SignOutButton />
+                </div >
+            )
+        }
             return (
                 <div className="Posts">
                     <AddPost uid={id}/>                  
