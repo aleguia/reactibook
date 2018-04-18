@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Route,
-  Redirect
+  Route
 } from 'react-router-dom';
 
 import Posts from './Posts';
-
 import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
 import PasswordForgetPage from './PasswordForget';
-import { auth } from '../firebase/firebase';
-
 import * as routes from '../constants/routes';
 import { firebase } from '../firebase';
 import './App.css';
@@ -22,8 +18,7 @@ class App extends Component {
 
     this.state = {
       authUser: null,
-      uid:null,
-     
+      uid:null,     
     };
 
     
@@ -54,7 +49,7 @@ class App extends Component {
       
       
       <Router>         
-        <div>
+        <div className="container">
           <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />}  />
           <Route exact path={routes.SIGN_IN} component={() => <SignInPage />}  />
           <Route exact path={routes.HOME} component={() => <SignInPage /> }  /> 

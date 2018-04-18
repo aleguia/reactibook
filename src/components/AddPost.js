@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { db, auth } from '../firebase/firebase';
+import { db } from '../firebase/firebase';
+import './AddPost.css';
 
 class AddPost extends Component {
     constructor(props) {
@@ -54,15 +55,17 @@ class AddPost extends Component {
                     onChange={this.handleChange}
                     value={this.state.post}
                 />
-                <select onChange={this.handleSelect}>
-                    <option value="publico" >Publico</option>                
-                    <option value="amigos" >Amigos</option>
-                </select>
-                <button
-                    type="submit"
-                    onClick={this.handleSubmit}                >
-                    Publicar
-                </button>
+                <div className="publishAndPublic">
+                    <select onChange={this.handleSelect}>
+                        <option value="publico" >Publico</option>                
+                        <option value="amigos" >Amigos</option>
+                    </select>
+                    <button
+                        type="submit"
+                        onClick={this.handleSubmit}                >
+                        Publicar
+                    </button>
+                </div>
             </div>
         );
     }

@@ -1,0 +1,16 @@
+.AddPost{
+    border: 1px solid black;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.AddPost input{
+    height: 100px;
+    width:100%;
+    border:1px solid black;
+}
+
+.publishAndPublic{
+    align-self: flex-end;
+}

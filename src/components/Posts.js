@@ -2,12 +2,10 @@ import React, {Component} from 'react';
 
 import SignInPage from './SignIn';
 import SignOutButton from './SignOut';
-import { db, auth } from '../firebase/firebase';
+import { db} from '../firebase/firebase';
 import EditButton from './EditButton';
 import AddPost from './AddPost';
-import {Redirect} from 'react-router-dom';
-
-
+import './Posts.css';
 
 
 class Posts extends Component{
@@ -19,7 +17,7 @@ class Posts extends Component{
             loading: false,
             editable:false
         }
-         this.editPost = this.editPost.bind(this);
+       
     }  
 
     componentWillMount() { 
@@ -57,24 +55,7 @@ class Posts extends Component{
             downvote: post.downvote
         });
     }
-
-    handleDelete = (post, key, id) => {
-        db.ref('/users/' + id + '/posts/' + key).remove();
-    }
-
-    editPost = () => {
-
-        console.log("por fin!!!!")
-
-
-    }
-
-    editPost() 
     
-    {}
-
-    
-
     render() {
         let posts = this.state.posts;        
         let _this = this;
@@ -120,29 +101,14 @@ class Posts extends Component{
                 {Object.keys(posts).map(function (key) { 
 
                         return (
-                            <div key={key}>
-                                
-                                    {/* {posts[key].post} */}
-                                    <EditButton 
-                                         
-                                        postText={posts[key].post}
-                                        editable={_this.state.editable}
-                                        uid={id}
-                                        dni={key}
-                                        compartidoCon={posts[key].compartidoCon}
-                                    />
-                                    
-                                    <button
-                                        onClick={_this.handleDelete.bind(this,
-                                            posts[key], key,id)}
-                                        type="button"
-                                    >
-                                    Eliminar
-                                    </button>                                       
-                                   
-                                                                    
-                                {/* <div>                                        
-                                </div>                                 */}
+                            <div className="timeline" key={key}>                                   
+                                <EditButton                                         
+                                    postText={posts[key].post}
+                                    editable={_this.state.editable}
+                                    uid={id}
+                                    dni={key}
+                                    compartidoCon={posts[key].compartidoCon}
+                                />                      
                             </div>
                         );
                     })                    

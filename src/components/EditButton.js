@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { db } from '../firebase/firebase';
+import './EditButton.css';
+
 class EditButton extends Component{
     constructor(props){
         super(props)
@@ -20,6 +22,10 @@ class EditButton extends Component{
         });
 
     }
+
+    handleDelete = (post, key, id) => {
+        db.ref('/users/' + this.props.uid + '/posts/' + this.props.dni).remove();
+    }  
     
     handleClick = () => {
         
@@ -31,11 +37,9 @@ class EditButton extends Component{
         this.setState({ 
             text: "Guardar",
             editable:true
-         })
+         })        
         
-        
-        }else{
-          
+        }else{          
             this.setState({
              text: "Editar",
              editable:false
@@ -44,32 +48,30 @@ class EditButton extends Component{
            db.ref('/users/' + id + '/posts/' + key).set({
                post: this.state.post,
                compartidoCon:this.props.compartidoCon
-           });
-            
-            
-            }
-
-
-        
-        
+           });           
+        }          
     };
 
     render() {
       if(this.state.editable){
           return(
-              <div>
+              <div className="editPost">
                 <input type="text" value={this.state.post} onChange={this.handleChange} />
-                <button onClick={(e) => this.handleClick(e)}>{this.state.text}</button>
+                  <div className="botonesContainer">
+                      <button className="tlBtn" onClick={this.handleClick}>{this.state.text}</button>
+                      <button className="tlBtn" onClick={this.handleDelete} type="button">Eliminar</button>
+                  </div>
               </div>  
           )
       }
       
       return (    
-        <div>
-            <div>
-                {this.props.postText}
+        <div className="editPost">
+            {this.props.postText}
+            <div className="botonesContainer">            
+                <button className="tlBtn" onClick={this.handleClick}>{this.state.text}</button>
+                <button className="tlBtn" onClick={this.handleDelete} type="button">Eliminar</button>
             </div>
-            <button onClick={(e)=> this.handleClick(e)}>{this.state.text}</button>
          </div>
     );
 };
