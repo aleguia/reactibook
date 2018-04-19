@@ -15,10 +15,17 @@ class Posts extends Component{
         this.state = {            
             posts: 0,
             loading: false,
-            editable:false
+            editable:false,
+            filtro:'amigos'
         }
        
-    }  
+    }
+    
+    handleFilter(e){        
+        this.setState({
+            filtro: e.target.value
+        })
+    }
 
     componentWillMount() { 
         let _this = this;     
@@ -46,16 +53,13 @@ class Posts extends Component{
             });
             } 
     }
-
     
     render() {
-        let posts = this.state.posts;        
-        let _this = this;
-        let id = this.state.id;
 
-        // if (!posts) {
-        //     return false;
-        // }
+        let posts = this.state.posts;       
+        let _this = this;
+        let id = this.state.id;      
+        
 
         if (this.state.loading) {
             return (
@@ -79,8 +83,7 @@ class Posts extends Component{
         if(!posts){
             return (
                 <div className="Posts">
-                    <AddPost uid={id} />                  
-
+                    <AddPost uid={id} /> 
                     <SignOutButton />
                 </div >
             )
@@ -89,22 +92,33 @@ class Posts extends Component{
         return (
             <div className="Posts">
                 <AddPost uid={id}/>                  
-                
-                {Object.keys(posts).map(function (key) { 
+                <div className="filtroPosts" >
+                    <button className="tlBtn" onClick={(e) => _this.handleFilter(e)} value="amigos">
+                        Amigos
+                    </button>
+                    <button className="tlBtn" onClick={(e) => _this.handleFilter(e)} value="publico">
+                        Público
+                    </button>                    
+                </div>                    
 
-                        return (
-                            <div className="timeline" key={key}>                                   
-                                <EditButton                                         
-                                    postText={posts[key].post}
-                                    editable={_this.state.editable}
-                                    uid={id}
-                                    dni={key}
-                                    compartidoCon={posts[key].compartidoCon}
-                                />                      
-                            </div>
-                        );
-                    })                    
-                }                    
+                {Object.keys(posts).filter(i => posts[i].compartidoCon === _this.state.filtro).map(function (key) {                 
+                    
+                    return (
+                        
+                        <div className="timeline" key={key}>
+                            <EditButton
+                                postText={posts[key].post}
+                                editable={_this.state.editable}
+                                uid={id}
+                                dni={key}
+                                compartidoCon={posts[key].compartidoCon}
+                                filtro={_this.state.filtro}
+                            />
+                        </div>
+                    );                   
+                 
+                })
+                } 
                 <SignOutButton />  
             </div >
         );        

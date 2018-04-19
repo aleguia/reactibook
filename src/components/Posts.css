@@ -15,7 +15,7 @@
 
 .tlBtn{
     border: none;
-    /* background-color: transparent; */
+    background-color: transparent;
     text-decoration: underline;
     cursor: pointer;
 }
