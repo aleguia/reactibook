@@ -109,7 +109,11 @@ class AddPost extends Component {
 
     render() {
         const isInvalid =
+<<<<<<< HEAD
            this.state.post === '' 
+=======
+           post === '' 
+>>>>>>> 14034ac0882da6dc8aa119adb35f2f8642990581
 
 
         return (
