@@ -113,6 +113,7 @@ class Posts extends Component{
                                 dni={key}
                                 compartidoCon={posts[key].compartidoCon}
                                 filtro={_this.state.filtro}
+                                imageURL={posts[key].imageURL}
                             />
                         </div>
                     );                   

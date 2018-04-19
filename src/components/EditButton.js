@@ -46,7 +46,8 @@ class EditButton extends Component{
             
            db.ref('/users/' + id + '/posts/' + key).set({
                post: this.state.post,
-               compartidoCon:this.props.compartidoCon
+               compartidoCon:this.props.compartidoCon,
+               imageURL:this.props.imageURL
            });           
         }          
     };
@@ -67,6 +68,7 @@ class EditButton extends Component{
       return (    
         <div className="editPost">
             {this.props.postText}
+            <img src={this.props.imageURL} style={{width: 300}}/>
             <div className="botonesContainer">            
                 <button className="tlBtn" onClick={this.handleClick}>{this.state.text}</button>
                 <button className="tlBtn" onClick={this.handleDelete} type="button">Eliminar</button>
