@@ -5,12 +5,20 @@
     flex-direction: column;
 }
 
-.AddPost input{
+.happen{
     height: 100px;
     width:100%;
     border:1px solid black;
 }
 
 .publishAndPublic{
-    align-self: flex-end;
+   display: flex;
+    justify-content: space-between;
+}
+
+
+
+.uploadInput{
+    border: 1px solid black;
+    
 }

@@ -6,8 +6,7 @@ class EditButton extends Component{
     constructor(props){
         super(props)
         this.state = {
-            text: "Editar",
-            display: "none",
+            text: "Editar",            
             post:this.props.postText
         }
         this.handleClick = this.handleClick.bind(this);

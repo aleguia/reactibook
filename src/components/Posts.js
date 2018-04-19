@@ -47,14 +47,6 @@ class Posts extends Component{
             } 
     }
 
-    submitEdit = (post, key) => {
-
-        db.ref('posts/' + key).set({
-            post: post.post,
-            upvote: post.upvote + 1,
-            downvote: post.downvote
-        });
-    }
     
     render() {
         let posts = this.state.posts;        
