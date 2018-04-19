@@ -19,6 +19,8 @@ class AddPost extends Component {
         imageURL:''
     };
 
+  
+
     handleChange = (e) => {
         this.setState({
             post: e.target.value
@@ -71,8 +73,7 @@ class AddPost extends Component {
             // })
         });
 
-    }
-    
+    }    
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -96,9 +97,7 @@ class AddPost extends Component {
             hasImage:false,
            
         });
-    }
-
-    
+    }    
 
     handleUpload = (e) => {
        this.setState({
@@ -109,6 +108,10 @@ class AddPost extends Component {
     }
 
     render() {
+        const isInvalid =
+           this.state.post === '' 
+
+
         return (
             <div className="AddPost">
                 <input
@@ -128,11 +131,12 @@ class AddPost extends Component {
                         
                     <div>    
                         <select onChange={this.handleSelect}>
-                            <option value="publico" >Publico</option>                
-                            <option value="amigos" >Amigos</option>
+                            <option value="publico">Publico</option>                
+                            <option value="amigos">Amigos</option>
                         </select>
                         <button
                             type="submit"
+                            disabled={isInvalid}
                             onClick={this.handleSubmit}                >
                             Publicar
                         </button>
